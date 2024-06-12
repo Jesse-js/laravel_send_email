@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
@@ -28,7 +29,8 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $sent = Mail::to($request->input('email'))->send(new ContactMail([
+        Auth::loginUsingId(1);
+        $sent = Mail::to(Auth::user())->send(new ContactMail([
             'fromName' => $request->input('name'),
             'fromEmail' => $request->input('email'),
             'subject' => $request->input('subject'),
