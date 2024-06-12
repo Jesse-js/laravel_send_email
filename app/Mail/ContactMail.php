@@ -54,12 +54,13 @@ class ContactMail extends Mailable
      */
     public function attachments(): array
     {
-        $attachments = $this->data['attachments'][0];
-        
-        return [
-            Attachment::fromPath(storage_path('app/'.$attachments['pathName']))
-                ->as($attachments['fileName'])
-                ->withMime($attachments['mimeType']),
-        ];
+        $attachments = [];
+
+        foreach ($this->data['attachments'] as $attachment) {
+            array_push($attachments, Attachment::fromPath(storage_path('app/' . $attachment['pathName']))
+                ->as($attachment['fileName'])
+                ->withMime($attachment['mimeType']));
+        }
+        return $attachments;
     }
 }
