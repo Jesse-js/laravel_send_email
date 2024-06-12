@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ContactMail;
+use App\Jobs\SendContactMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -29,15 +28,12 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        Auth::loginUsingId(1);
-        $sent = Mail::to(Auth::user())->send(new ContactMail([
-            'fromName' => $request->input('name'),
-            'fromEmail' => $request->input('email'),
-            'subject' => $request->input('subject'),
-            'message' => $request->input('message')
-        ]));
+        $user = Auth::loginUsingId(1);
+        $data = $request->all();
 
-        var_dump($sent);
+        SendContactMail::dispatch($user, $data)->onQueue('mails');
+
+        return view('contact', ['message' => 'Mensagem enviada com sucesso!']);
     }
 
     /**

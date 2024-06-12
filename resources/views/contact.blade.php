@@ -11,6 +11,9 @@
 
 <body>
     <div class="container">
+        @if (isset($message))
+            <p class="mt-2 alert alert-success">{{ $message }}</p>
+        @endif
         <h1>Contact Us</h1>
         <p>This is the contact page.</p>
         <form action="{{ route('contact.store') }}" method="post">
