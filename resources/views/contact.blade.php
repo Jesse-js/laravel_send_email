@@ -24,6 +24,10 @@
                 <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com">
             </div>
             <div class="mb-3">
+                <label for="subject" class="form-label">Subject</label>
+                <input name="subject" type="text" class="form-control" id="subject" placeholder="subject">
+            </div>
+            <div class="mb-3">
                 <label for="message" class="form-label">Message</label>
                 <textarea name="message" class="form-control" id="message" rows="3"></textarea>
             </div>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -19,7 +21,6 @@ class ContactController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -27,7 +28,14 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sent = Mail::to($request->input('email'))->send(new ContactMail([
+            'fromName' => $request->input('name'),
+            'fromEmail' => $request->input('email'),
+            'subject' => $request->input('subject'),
+            'message' => $request->input('message')
+        ]));
+
+        var_dump($sent);
     }
 
     /**
