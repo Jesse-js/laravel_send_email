@@ -16,7 +16,7 @@
         @endif
         <h1>Contact Us</h1>
         <p>This is the contact page.</p>
-        <form action="{{ route('contact.store') }}" method="post">
+        <form action="{{ route('contact.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
@@ -33,6 +33,11 @@
             <div class="mb-3">
                 <label for="message" class="form-label">Message</label>
                 <textarea name="message" class="form-control" id="message" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="files" class="form-label">Files</label>
+                <input name="files[]" class="form-control" type="file" id="files" multiple>
+                {{-- <input name="files" class="form-control" type="file" id="files"> --}}
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>

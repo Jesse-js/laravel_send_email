@@ -34,7 +34,8 @@ class SendContactMail implements ShouldQueue
             'fromName' => $this->data['name'],
             'fromEmail' => $this->data['email'],
             'subject' => $this->data['subject'],
-            'message' => $this->data['message']
+            'message' => $this->data['message'],
+            'attachments' => $this->data['attachments']
         ]));
     }
 }

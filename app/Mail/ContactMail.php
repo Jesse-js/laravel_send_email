@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -53,6 +54,12 @@ class ContactMail extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        $attachments = $this->data['attachments'][0];
+        
+        return [
+            Attachment::fromPath(storage_path('app/'.$attachments['pathName']))
+                ->as($attachments['fileName'])
+                ->withMime($attachments['mimeType']),
+        ];
     }
 }

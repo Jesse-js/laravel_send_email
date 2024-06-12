@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateContact;
 use App\Jobs\SendContactMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,11 +30,11 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $user = Auth::loginUsingId(1);
-        $data = $request->all();
+        $contact = CreateContact::handle($request->all());
+            
+        SendContactMail::dispatch($user, $contact->toArray())->onQueue('mails');
 
-        SendContactMail::dispatch($user, $data)->onQueue('mails');
-
-        return view('contact', ['message' => 'Mensagem enviada com sucesso!']);
+        return view('contact', ['message' => 'Message sent!']);
     }
 
     /**
